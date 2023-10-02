@@ -9,12 +9,10 @@ theme_rhizogene <- function(){
     theme(
 
       #grid elements
-      panel.grid.major = ggplot2::element_blank(),    #strip major gridlines
+      panel.grid.major = ggplot2::element_line(color = "#2A2C2A80",
+                                               linewidth = .1),
       panel.grid.minor = ggplot2::element_blank(),    #strip minor gridlines
       axis.ticks = ggplot2::element_blank(),          #strip axis ticks
-
-      #since theme_minimal() already strips axis lines,
-      #we don't need to do that again
 
       #text elements
       plot.title = ggplot2::element_text(             #title
@@ -51,7 +49,7 @@ theme_rhizogene <- function(){
       axis.text.x = ggplot2::element_text(            #margin for axis text
         margin=margin(t = 5, b = 10),
         color = text_color),
-      axis.line = ggplot2::element_line(color = "#6D444B"),
+      axis.line = ggplot2::element_line(color = text_color),
       #aspect.ratio = 0.8,
       plot.margin = ggplot2::margin(t = 0.9, r = 0.5, b = 0.5, l = 0.5, unit = "line")
 
