@@ -51,10 +51,15 @@ theme_rhizogene <- function(){
         color = text_color),
       axis.line = ggplot2::element_line(color = text_color),
       #aspect.ratio = 0.8,
-      plot.margin = ggplot2::margin(t = 0.9, r = 0.5, b = 0.5, l = 0.5, unit = "line")
+      plot.margin = ggplot2::margin(t = 0.9, r = 0.5, b = 0.5, l = 0.5, unit = "line"),
 
       #since the legend often requires manual tweaking
       #based on plot content, don't define it here
+
+      ## backgronunds to match wiki
+      panel.background = ggplot2::element_rect(fill = ggplot2::alpha("#FFFADF", 0), color = NA, ),
+      plot.background = ggplot2::element_rect(fill = ggplot2::alpha("#FFFADF", 0), color = NA),
+      legend.background = ggplot2::element_rect(fill = ggplot2::alpha("#FFFADF", 0), color = NA)
     )
 }
 

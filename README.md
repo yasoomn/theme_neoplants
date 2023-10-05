@@ -2,6 +2,8 @@
 
 ## Installation
 
+Install the package
+
 ```
 devtools::install_github("yasoomn/r-rhizogene")
 ```
@@ -9,5 +11,5 @@ devtools::install_github("yasoomn/r-rhizogene")
 Load the package
 
 ```
-lbrary(r-rhizogene)
+lbrary(rhizogene)
 ```
