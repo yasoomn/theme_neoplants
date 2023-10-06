@@ -3,6 +3,7 @@
 theme_rhizogene <- function(){
   font <- "Atkinson Hyperlegible"   #assign font family up front
   text_color <- "#2A2C2A"
+  background_color = "#FFFADF"
 
   ggplot2::theme_classic() %+replace%    #replace elements we want to change
 
@@ -57,9 +58,9 @@ theme_rhizogene <- function(){
       #based on plot content, don't define it here
 
       ## backgronunds to match wiki
-      panel.background = ggplot2::element_rect(fill = ggplot2::alpha("#FFFADF", 0), color = NA, ),
-      plot.background = ggplot2::element_rect(fill = ggplot2::alpha("#FFFADF", 0), color = NA),
-      legend.background = ggplot2::element_rect(fill = ggplot2::alpha("#FFFADF", 0), color = NA)
+      panel.background = ggplot2::element_rect(fill = background_color, color = NA, ),
+      plot.background = ggplot2::element_rect(fill = background_color, color = NA),
+      legend.background = ggplot2::element_rect(fill = background_color, color = NA)
     )
 }
 
