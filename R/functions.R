@@ -64,8 +64,8 @@ theme_rhizogene <- function(){
     )
 }
 
-rhizogene_light = c( "#668F55", "#8497B3","#D6DEB0", "#AA9AAB", "#D98895", "#F0BB54")
-rhizogene_dark = c( "#474A3B", "#33482B","#424B5A", "#554D56", "#6D444B", "#503E1C")
+rhizogene_light = c("#668F55", "#AA9AAB", "#8497B3", "#D98896", "#D6DEB0",  "#F0BB54")
+rhizogene_dark = c("#474A3B", "#33482B","#424B5A", "#554D56", "#6D444B", "#503E1C")
 rhizogene_extra = c("#9072db", "#02117e", "#d815b4", "#155126", "#f23b65", "#a33e12", "#881448", "#ab7b05", "#7212ff", "#f9380a")
 
 #theme_set(theme_rhizogene())
