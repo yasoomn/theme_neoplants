@@ -124,10 +124,10 @@ Create.plant.bar.plot <- function(data, title = "", subtitle = "" ) {
   as.data.frame(data[[1]])%>%
     ggplot2::ggplot(ggplot2::aes(x = as.factor(Day), y = perc, fill = phenotype)) +
     ggplot2::geom_col(position = ggplot2::position_dodge(0.8), width = 0.6, color = "#2a2c2a") +
-    ggplot2::scale_fill_manual(values = c("Dead" = "#2a2c2a", "RUBY" = "#D98896", "Hairy roots" = "#8497B3", "RUBY + hairy roots" = "#AA9AAB", "None" = "#668F55")) +
+    ggplot2::scale_fill_manual(values = c("Dead" = "#2a2c2a", "RUBY" = "#D98896", "Hairy roots" = "#8497B3", "RUBY + hairy roots" = "#AA9AAB", "Same as WT" = "#668F55")) +
     ggplot2::scale_y_continuous(labels = scales::label_percent()) +
     ggplot2::scale_x_discrete(labels = function(a){paste(a, "dpi")}) +
-    ggplot2::annotate("text", x = 2.45, y = (max(test[[1]]$perc) + 0.05), label = paste("N =", nrow(test[[3]]))) +
+    ggplot2::annotate("text", x = 2.45, y = (max(test[[1]]$perc) + 0.05), label = paste("N =", nrow(test[[3]])/2)) +
     ggplot2::labs(y = "Phenotype in %", x = "", fill = "Phenotype", title = title, subtitle = subtitle) +
     ggplot2::theme(panel.grid.major.x = ggplot2::element_blank())
 }
