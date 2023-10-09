@@ -77,3 +77,57 @@ rhizogene_extra = c("#9072db", "#02117e", "#d815b4", "#155126", "#f23b65", "#a33
 scientific_10 <- function(x) {
   parse(text=gsub("e", " %*% 10^", scales::scientific_format()(x)))
 }
+
+#' @export
+Summarize.plant.data = function(csv) {
+
+  is.dead = function(a) {
+    ifelse(a == "dead", TRUE, FALSE)
+  }
+
+  #imports the csv file
+  data = read.csv(csv, na.strings = c(""))
+
+  # creates a column with dead/alive information, and a column with the phenotype (for plotting)
+  plantData = data %>%
+    dplyr::mutate(amIdead = is.dead(plant.health)) %>%
+    dplyr::mutate(phenotype = dplyr::case_when(
+      amIdead == TRUE ~ "Dead",
+      RUBY..Yes.no == "no" & new.hairy.tissue == "no" ~ "Same as WT",
+      RUBY..Yes.no == "yes" & new.hairy.tissue == "no" ~ "RUBY",
+      RUBY..Yes.no == "yes" & new.hairy.tissue == "yes" ~ "RUBY + hairy roots",
+      RUBY..Yes.no == "no" & new.hairy.tissue == "yes" ~ "Hairy roots"
+    ))
+
+  plantData$phenotype <- as.factor(plantData$phenotype)
+
+  # select plants that are dead on day 3
+  deadAfter3days = plantData %>% dplyr::filter(Day == 3 & amIdead == T) %>% dplyr::pull(plant.no.)
+
+  # remove plants that are dead on day 3 from the data set, they were most likely damaged durign handling
+  plantDataTrimmed = plantData %>% dplyr::filter(!plant.no. %in% deadAfter3days)
+
+  # create a data frame summarizing the values, containing the percentage for each phenotype
+  SummaryPlants = plantDataTrimmed %>%
+    dplyr::group_by(Day, phenotype)%>%
+    dplyr::summarise(count = n() ,.groups = "keep") %>%
+    dplyr::mutate(perc = (count/(nrow(plantDataTrimmed)/2)))
+
+
+
+  list(SummaryPlants, plantData, plantDataTrimmed)
+}
+
+
+#' @export
+Create.plant.bar.plot = function(data, title = "", subtitle = "" ) {
+  as.data.frame(data[[1]])%>%
+    ggplot2::ggplot(ggplot2::aes(x = as.factor(Day), y = perc, fill = phenotype)) +
+    ggplot2::geom_col(position = ggplot2::position_dodge(0.8), width = 0.6, color = "#2a2c2a") +
+    ggplot2::scale_fill_manual(values = c("Dead" = "#2a2c2a", "RUBY" = "#D98896", "Hairy roots" = "#8497B3", "RUBY + hairy roots" = "#AA9AAB", "None" = "#668F55")) +
+    ggplot2::scale_y_continuous(labels = scales::label_percent()) +
+    ggplot2::scale_x_discrete(labels = function(a){paste(a, "dpi")}) +
+    ggplot2::annotate("text", x = 2.45, y = (max(test[[1]]$perc) + 0.05), label = paste("N =", nrow(test[[3]]))) +
+    ggplot2::labs(y = "Phenotype in %", x = "", fill = "Phenotype", title = title, subtitle = subtitle) +
+    ggplot2::theme(panel.grid.major.x = ggplot2::element_blank())
+}

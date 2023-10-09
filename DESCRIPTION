@@ -1,6 +1,6 @@
 Package: rhizogene
 Title: Aesthetic Settings and Assets for iGEM Marburg 2023
-Version: 0.2.2
+Version: 0.3
 Authors@R: 
     person("Yasoo", "Morimoto", , "morimoty@students.uni-marburg.de", role = c("aut", "cre"))
 Description: Aesthetic Settings and Assets for iGEM Marburg 2023.
@@ -11,7 +11,8 @@ Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.2.3
 Imports:
 	ggplot2,
-	scales
+	scales,
+	dplyr
 Depends: 
     R (>= 2.10)
 LazyData: true
