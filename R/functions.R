@@ -79,7 +79,7 @@ scientific_10 <- function(x) {
 }
 
 #' @export
-Summarize.plant.data = function(csv) {
+Summarize.plant.data <- function(csv) {
 
   is.dead = function(a) {
     ifelse(a == "dead", TRUE, FALSE)
@@ -120,7 +120,7 @@ Summarize.plant.data = function(csv) {
 
 
 #' @export
-Create.plant.bar.plot = function(data, title = "", subtitle = "" ) {
+Create.plant.bar.plot <- function(data, title = "", subtitle = "" ) {
   as.data.frame(data[[1]])%>%
     ggplot2::ggplot(ggplot2::aes(x = as.factor(Day), y = perc, fill = phenotype)) +
     ggplot2::geom_col(position = ggplot2::position_dodge(0.8), width = 0.6, color = "#2a2c2a") +
