@@ -92,11 +92,19 @@ Summarize.plant.data <- function(csv) {
     dplyr::mutate(amIdead = is.dead(plant.health)) %>%
     dplyr::mutate(phenotype = dplyr::case_when(
       amIdead == TRUE ~ "Dead",
-      RUBY..Yes.no == "no" & new.hairy.tissue == "no" ~ "Same as WT",
-      RUBY..Yes.no == "yes" ~ "RUBY",
+      RUBY..Yes.no == "no" & new.hairy.tissue == "no" ~ "Not transformed",
+      RUBY..Yes.no == "yes" & new.hairy.tissue == "no" ~ "Only RUBY",
       RUBY..Yes.no == "yes" & new.hairy.tissue == "yes" ~ "RUBY + hairy roots",
       RUBY..Yes.no == "no" & new.hairy.tissue == "yes" ~ "Hairy roots"
-    ))
+    ),
+    isRuby = ifelse(RUBY..Yes.no == "yes", TRUE, FALSE),
+    amIruby  = case_when(
+      RUBY..Yes.no == "no" & new.hairy.tissue == "no" ~ FALSE,
+      RUBY..Yes.no == "yes" & new.hairy.tissue == "no" ~ TRUE,
+      RUBY..Yes.no == "yes" & new.hairy.tissue == "yes" ~ TRUE,
+      RUBY..Yes.no == "no" & new.hairy.tissue == "yes" ~ FALSE
+    )
+    )
 
   plantData$phenotype <- as.factor(plantData$phenotype)
 
@@ -106,11 +114,21 @@ Summarize.plant.data <- function(csv) {
   # remove plants that are dead on day 3 from the data set, they were most likely damaged durign handling
   plantDataTrimmed = plantData %>% dplyr::filter(!plant.no. %in% deadAfter3days)
 
+  calculateRuby = function(a){
+    plantDataTrimmed %>% dplyr::group_by(isRuby, Day) %>%
+      dplyr::summarise(count = n() ,.groups = "keep") %>%
+      dplyr::filter(Day == a & isRuby == TRUE) %>%
+      dplyr::pull(count)
+  }
+
 
   # create a data frame summarizing the values, containing the percentage for each phenotype
   SummaryPlants = plantDataTrimmed %>%
-    dplyr::group_by(Day, phenotype)%>%
+    dplyr::group_by(Day, phenotype, .drop = F)%>%
     dplyr::summarise(count = n() ,.groups = "keep") %>%
+    dplyr::ungroup() %>%
+    dplyr::add_row(Day = 10, phenotype = "RUBY", count = calculateRuby(10)) %>%
+    dplyr::add_row(Day = 3, phenotype = "RUBY", count = calculateRuby(3)) %>%
     dplyr::mutate(perc = (count/(nrow(plantDataTrimmed)/length(unique(plantDataTrimmed$Day)))))
 
 
@@ -121,13 +139,15 @@ Summarize.plant.data <- function(csv) {
 #' @export
 Create.plant.bar.plot <- function(plantData, title = "", subtitle = "" ) {
   as.data.frame(plantData[[1]])%>%
+    dplyr::  filter(phenotype != "Only RUBY") %>%
     ggplot2::ggplot(ggplot2::aes(x = as.factor(Day), y = perc, fill = phenotype)) +
     ggplot2::geom_col(position = ggplot2::position_dodge(0.8), width = 0.6, color = "#2a2c2a") +
     ggplot2::scale_fill_manual(values = c("Dead" = "#2a2c2a",
                                           "RUBY" = "#D98896",
                                           "Hairy roots" = "#8497B3",
                                           "RUBY + hairy roots" = "#AA9AAB",
-                                          "Same as WT" = "#668F55")) +
+                                          "Not transformed" = "#668F55",
+                                          "Only RUBY" = "#D98896")) +
     ggplot2::scale_y_continuous(labels = scales::label_percent()) +
     ggplot2::scale_x_discrete(labels = function(a){paste(a, "dpi")}) +
     ggplot2::annotate("text",
