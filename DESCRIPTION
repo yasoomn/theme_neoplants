@@ -1,9 +1,9 @@
-Package: rhizogene
-Title: Aesthetic Settings and Assets for iGEM Marburg 2023
-Version: 1.0
+Package: neoplants
+Title: Aesthetic Settings and Assets for Neoplants
+Version: 0.1
 Authors@R: 
     person("Yasoo", "Morimoto", , "morimoty@students.uni-marburg.de", role = c("aut", "cre"))
-Description: Aesthetic Settings and Assets for iGEM Marburg 2023.
+Description: Aesthetic Settings and Assets for Neoplants.
 License: `use_mit_license()`, `use_gpl3_license()` or friends to pick a
     license
 Encoding: UTF-8

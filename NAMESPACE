@@ -3,4 +3,4 @@
 export(Create.plant.bar.plot)
 export(Summarize.plant.data)
 export(scientific_10)
-export(theme_rhizogene)
+export(theme_neoplants)

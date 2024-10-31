@@ -1,16 +1,14 @@
 # load necessary libraries and the configurations for the RhizoGene theme. This code block needs to be executed every time Rstudio is opened.
 #' @export
-theme_rhizogene <- function(){
-  font <- "Atkinson Hyperlegible"   #assign font family up front
-  text_color <- "#2A2C2A"
-  background_color = "#FFFADF"
+theme_neoplants <- function(text_color = "#0d3331", background_color = "#FFFFFF"){
+  font <- "Sohne-Kraftig"   #assign font family up front
 
   ggplot2::theme_classic() %+replace%    #replace elements we want to change
 
     theme(
 
       #grid elements
-      panel.grid.major = ggplot2::element_line(color = "#2A2C2A80",
+      panel.grid.major = ggplot2::element_line(color = "#23282880",
                                                linewidth = .1),
       panel.grid.minor = ggplot2::element_blank(),    #strip minor gridlines
       axis.ticks = ggplot2::element_blank(),          #strip axis ticks
@@ -64,6 +62,7 @@ theme_rhizogene <- function(){
     )
 }
 
+neoplants_colors = c('#38c6a3', '#174c47', '#99d9c9', '#c7ffca', '#0d3331')
 rhizogene_light = c("#668F55", "#AA9AAB", "#8497B3", "#D98896", "#D6DEB0",  "#F0BB54")
 rhizogene_dark = c("#474A3B", "#33482B","#424B5A", "#554D56", "#6D444B", "#503E1C")
 rhizogene_extra = c("#9072db", "#02117e", "#d815b4", "#155126", "#f23b65", "#a33e12", "#881448", "#ab7b05", "#7212ff", "#f9380a")
