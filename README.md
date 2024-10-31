@@ -1,4 +1,7 @@
-# r-rhizogene
+# r-Neoplants
+
+This R package 
+
 
 ## Installation
 
@@ -11,9 +14,7 @@ devtools::install_github("yasoomn/r-rhizogene")
 
 ## Style
 
-Color palette included
-
-Rhizogene light
+This 
 
 ![](./light_palette.png)
 
